@@ -1,8 +1,8 @@
 """
 ------------------------------------------------------------------------------
 Program:     The LDAR Simulator (LDAR-Sim)
-File:        test_get_summary_dict.py
-Purpose: Contains unit tests for testing the get_summary_dict method in the
+File:        test_activate.py
+Purpose: Contains unit tests for testing the activate method in the
          IntermittentNonRepairableEmission class.
 
 This program is free software: you can redistribute it and/or modify
@@ -20,9 +20,8 @@ along with this program.  If not, see <https://opensource.org/licenses/MIT>.
 """
 
 from datetime import date
-from constants.output_file_constants import EMIS_DATA_COL_ACCESSORS as eca
-from constants.general_const import Conversion_Constants as cc
-from testing.unit_testing.test_virtual_world.test_intermittent_non_repairable_emission.intermittent_non_repairable_emission_creation_fixtures import (  # noqa
+
+from testing.unit_testing.test_virtual_world.test_intermittent_non_repair.creation_fixtures import (  # noqa
     intermittent_non_repairable_emission_creation_params_fixture,
 )
 from virtual_world.emission_types.intermittent_non_repairable_emission import (
@@ -30,20 +29,15 @@ from virtual_world.emission_types.intermittent_non_repairable_emission import (
 )
 
 
-def test_get_summary_dict_returns_expected_true_emissions_volume(
-    intermittent_non_repairable_emission_creation_params: str,
+def test_activate_correctly_sets_emitting_true_if_emission_activated(
+    intermittent_non_repairable_emission_creation_params,
 ):
-    emissions_properties: dict = {"active_days": 20, "days_emitting": 10}
-    expected_volume_emitted: float = 10.0 * cc.GRAMS_PER_SECOND_TO_KG_PER_DAY
-    end_date: date = date(2024, 1, 31)
-
     emission: IntermittentNonRepairableEmission = IntermittentNonRepairableEmission(
         **intermittent_non_repairable_emission_creation_params
     )
 
-    for property, value in emissions_properties.items():
-        setattr(emission, f"_{property}", value)
+    activate_date: date = date(2024, 1, 1)
 
-    summary_dict: dict = emission.get_summary_dict(end_date=end_date)
+    emission.activate(activate_date)
 
-    assert summary_dict[eca.T_VOL_EMIT] == expected_volume_emitted
+    assert emission._emitting is True

@@ -72,26 +72,24 @@ Read [Fox et al 2021](https://www.sciencedirect.com/science/article/pii/S0959652
 
 #### Step 2: Installing Packages with Conda
 
-Using Conda (Conda-forge) and the requirements file included in the "install folder" Follow the directions included in the Setting Up LDAR Sim Dev Environment file. The requirements.txt file can also be used with PIP and pipenv, but Python should be installed separately.
+Using Conda (Conda-forge) and the environment files included in the "install folder". Follow the directions included in the [installation guide](INSTALL_GUIDE.md).
 
 - Install Miniconda3 newest version
 - From Conda Shell: cd into LDAR-Sim/install
 
   `conda config --add channels conda-forge`
 
-  `conda config --set channel_priority strict1`
+  `conda config --set channel_priority flexible`
 
-  `conda create -n ldar_sim --file requirements.txt`
+  `conda env create -f linux_environment.yml` (for Linux)
+  
+  `conda env create -f environment.yml` (for Windows)
 
-  `conda activate ldar_sim`
+  `conda activate ldar_sim_env`
 
-Alternatively pip and pipenv can be used to install the requirements file with:
+**Note**: Use `linux_dev_environment.yml` or `dev_environment.yml` if you plan to contribute to development (includes testing tools like pytest, black, etc.)
 
-  `pip install ldar_sim -r requirements.txt`
-
-if you are using satellite modules orbit predictor needs to be added to environment
-
-  `pip install orbit_predictor==1.14.2`
+**Important**: There is no `requirements.txt` file. This project uses conda environment YAML files for dependency management.
 
 #### Step 3: Get Weather and Facility Data
 
@@ -158,23 +156,31 @@ Check out the [user manual](USER_MANUAL.md) for more info on the parameters.
 
 #### Step 5: Run the program
 
-The main program is a python script called LDAR_Sim_run.py. Within the virtual environment (or where all py packages are installed) run:
+The main program is a python script called `ldar_sim_run.py` located in the `LDAR_Sim/src/` directory. Within the conda environment, run:
 
- ```Python LDAR_Sim_run.py {SS_XXX} {VW_XXX} {P_XXX} {M_YYY}```
+ ```bash
+ conda activate ldar_sim_env
+ cd LDAR_Sim/src
+ python ldar_sim_run.py {SS_XXX} {VW_XXX} {P_XXX} {M_YYY}
+ ```
 
   where each argument is a path to a simulation settings, virtual world, program, or method input parameter file. for example:
 
-```Python LDAR_Sim_run.py ./simulations/Simulation_settings.yaml ./simulations/virtual_world.yaml ./simulations/P_aircraft.yaml ./simulations/P_none.yaml ./ simulations/M_aircraft.yaml ./simulations/M_OGI_FU.```
+```bash
+python ldar_sim_run.py ./simulations/Simulation_settings.yaml ./simulations/virtual_world.yaml ./simulations/P_aircraft.yaml ./simulations/P_none.yaml ./simulations/M_aircraft.yaml ./simulations/M_OGI_FU.yaml
+```
 
-alternatively, an entire directory can be passed using the "-P", "--in_dir" flags where all files within the directory are added to the program. for example:
+alternatively, an entire directory can be passed using the "--in_dir" flag where all files within the directory are added to the program. for example:
 
- ```Python LDAR_Sim_run.py --in_dir ./simulations```
+ ```bash
+ python ldar_sim_run.py --in_dir ../simulations/simple_test_case1/
+ ```
 
  will load all files in the simulations folder into the program.
 
  Output files, including maps, charts and csv files will be generated and placed in the output folder.
 
- **Note**: that you can use absolute references or relative, where the root folder is this folder.
+ **Note**: Use absolute paths if you encounter path resolution issues. The working directory should be `LDAR_Sim/src/`.
 
 ## Other versions
 
@@ -186,6 +192,6 @@ The included python code follows strict PEP8 Standards for formatting with a mod
 
 Example command to run black in cmd: ```black --line-length 100 LDAR_Sim```
 
-When submitting Issues, Commits and Pull Requests, please use the provided templates to ensure consistent format. For instructions on how to setup the LDAR-Sim commit message template please see the [Setup Instructions](LDAR_Sim/install/SetupInstructions.md)
+When submitting Issues, Commits and Pull Requests, please use the provided templates to ensure consistent format. For instructions on how to setup the LDAR-Sim commit message template please see the [Setup Instructions](Guides/SetupInstructions.md)
 
 The authors welcome all contributions and collaborations. Please reach out - we would love to hear from you and/or work with you!
