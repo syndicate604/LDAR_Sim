@@ -192,6 +192,6 @@ The included python code follows strict PEP8 Standards for formatting with a mod
 
 Example command to run black in cmd: ```black --line-length 100 LDAR_Sim```
 
-When submitting Issues, Commits and Pull Requests, please use the provided templates to ensure consistent format. For instructions on how to setup the LDAR-Sim commit message template please see the [Setup Instructions](LDAR_Sim/install/SetupInstructions.md)
+When submitting Issues, Commits and Pull Requests, please use the provided templates to ensure consistent format. For instructions on how to setup the LDAR-Sim commit message template please see the [Setup Instructions](Guides/SetupInstructions.md)
 
 The authors welcome all contributions and collaborations. Please reach out - we would love to hear from you and/or work with you!
