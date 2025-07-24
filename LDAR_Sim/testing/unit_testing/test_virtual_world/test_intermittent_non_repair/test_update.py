@@ -19,7 +19,7 @@ along with this program.  If not, see <https://opensource.org/licenses/MIT>.
 ------------------------------------------------------------------------------
 """
 
-from testing.unit_testing.test_virtual_world.test_intermittent_non_repairable_emission.intermittent_non_repairable_emission_creation_fixtures import (  # noqa
+from testing.unit_testing.test_virtual_world.test_intermittent_non_repair.creation_fixtures import (  # noqa
     intermittent_non_repairable_emission_creation_params_fixture,
 )
 from virtual_world.emission_types.intermittent_non_repairable_emission import (
